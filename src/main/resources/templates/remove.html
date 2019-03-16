@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head data-th-replace="fragments/layout :: headFragment(title='Удаление')"></head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h1>Хотите удалить?</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s1">
+            <form data-th-action="@{/{id}/remove(id=${item.id})}" method="post">
+                <button class="btn-floating waves-effect red btn-large pulse" type="submit"><i
+                        class="large material-icons">check</i></button>
+            </form>
+        </div>
+
+        <div class="col s1"></div>
+
+        <div class="col s1">
+            <a data-th-href="@{/{id}(id=${item.id})}" class="btn-floating waves-effect indigo btn-large"
+               type="submit"><i
+                    class="large material-icons">close</i></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

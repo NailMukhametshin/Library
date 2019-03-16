@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head data-th-replace="fragments/layout :: headFragment(title='Книги')"></head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <form data-th-action="@{/search}">
+                <input name="description" placeholder="Что ищем?" type="search" class="item-search"
+                       data-th-value="${description}">
+                <button class="waves-effect indigo btn" type="submit">Искать</button>
+            </form>
+
+            <h2>Книги</h2>
+            <ul class="collection">
+                <li class="collection-item" data-th-each="item : ${items}">
+                    <a data-th-href="@{/{id}(id=${item.id})}">
+                        <h4><span data-th-text="${item.title}"></span>
+                            <span data-th-text="${item.author}"></span>
+                            <span data-th-text="${item.printYear}"></span>
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+
+            <p data-th-if="${items.size() == 0}" class="no-items">Нет документов для отображения</p>
+
+            <div class="row">
+                <div class="col s1">
+                <form data-th-action="@{/0/edit}">
+                    <button class="indigo btn pulse" type="submit">Добавить</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
