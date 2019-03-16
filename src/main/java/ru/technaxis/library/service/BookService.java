@@ -1,15 +1,12 @@
 package ru.technaxis.library.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.technaxis.library.dto.BookDto;
 import ru.technaxis.library.entity.BookEntity;
+import ru.technaxis.library.exception.LongDescriptionException;
 import ru.technaxis.library.exception.TitleIsNullException;
-import ru.technaxis.library.exception.DocumentNotFoundException;
-import ru.technaxis.library.exception.UnsupportedFileContentTypeException;
-import ru.technaxis.library.exception.UploadFileException;
+import ru.technaxis.library.exception.BookNotFoundException;
 import ru.technaxis.library.repository.BookRepository;
 
 
@@ -18,7 +15,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class BookService {
@@ -44,7 +40,7 @@ public class BookService {
 
     public BookEntity getById(int id) {
         return repository.findById(id)
-                .orElseThrow(DocumentNotFoundException::new);
+                .orElseThrow(BookNotFoundException::new);
     }
 
     public void checkReadAlready(BookDto item) {
@@ -64,6 +60,12 @@ public class BookService {
         if (item.getTitle().length() == 0) {
             throw new TitleIsNullException();
         }
+
+        if (item.getDescription().length() >= 255) {
+            throw new LongDescriptionException();
+        }
+
+
 
         repository.save(entity);
     }
