@@ -29,9 +29,19 @@ public class BookController {
         return "view";
     }
 
+    @PostMapping("/{id}")
+    public String checkReadAlready(
+            @PathVariable int id,
+            @ModelAttribute BookDto dto
+    ) {
+        service.checkReadAlready(dto);
+
+        return "redirect:/{id}";
+    }
+
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable int id, Model model) {
-        model.addAttribute("item", service.getByIdOrEmpty(id));
+        model.addAttribute("item", service.getById(id));
         return "edit";
     }
 

@@ -47,47 +47,22 @@ public class BookService {
                 .orElseThrow(DocumentNotFoundException::new);
     }
 
-    public BookEntity getByIdOrEmpty(int id) {
-        return repository.findById(id)
-                .orElse(new BookEntity());
+    public void checkReadAlready(BookDto item) {
+        BookEntity entity = getById(item.getId());
+        entity.setReadAlready(true);
+        repository.save(entity);
     }
 
     public void save(BookDto item) {
-        BookEntity entity = getByIdOrEmpty(item.getId());
+        BookEntity entity = getById(item.getId());
         entity.setTitle(item.getTitle());
         entity.setDescription(item.getDescription());
-        entity.setAuthor(item.getAuthor());
         entity.setIsbn(item.getIsbn());
         entity.setPrintYear(item.getPrintYear());
+        entity.setReadAlready(false);
 
         if (item.getTitle().length() == 0) {
             throw new TitleIsNullException();
-        }
-
-        MultipartFile file = item.getFile();
-        if (!file.isEmpty() && file.getContentType() != null) {
-            String ext;
-            if (file.getContentType().equals(MediaType.IMAGE_PNG_VALUE)) {
-                ext = ".png";
-            } else if (file.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)) {
-                ext = ".jpg";
-            } else {
-                throw new UnsupportedFileContentTypeException();
-            }
-
-            String name = UUID.randomUUID().toString() + ext;
-
-            try {
-                file.transferTo(uploadPath.resolve(name));
-
-                if (entity.getPath() != null) {
-                    Files.deleteIfExists(uploadPath.resolve(entity.getPath()));
-                }
-            } catch (IOException e) {
-                throw new UploadFileException();
-            }
-
-            entity.setPath(name);
         }
 
         repository.save(entity);

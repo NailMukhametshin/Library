@@ -23,11 +23,6 @@
                 </div>
 
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">account_circle</i>
-                    <input name="author" placeholder="Введите автора" data-th-value="${item.author}">
-                </div>
-
-                <div class="input-field col s12">
                     <i class="material-icons prefix">mode_edit</i>
                     <input name="isbn" placeholder="Введите ISBN"
                            data-th-value="${item.isbn}">
@@ -38,19 +33,6 @@
                     <input name="printYear" placeholder="Введите год издания"
                            data-th-value="${item.printYear}">
                 </div>
-
-                <div class="row">
-                    <div class="file-field">
-                        <div class="waves-effect indigo btn">
-                            <span>Файл</span>
-                            <input input name="file" type="file">
-                        </div>
-                    </div>
-                </div>
-
-                <p data-th-if="${item.id != 0}">
-                    <img data-th-src="@{/media/{path}(path=${item.path})}">
-                </p>
 
                 <button class="waves-effect indigo btn" type="submit"><i class="material-icons right">cloud</i>Сохранить
                 </button>

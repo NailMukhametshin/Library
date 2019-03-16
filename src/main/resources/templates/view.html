@@ -21,6 +21,15 @@
             </div>
 
             <div class="row">
+
+                <div class="col s1">
+                    <form data-th-action="@{/{id}/(id=${item.id})}" method="post">
+                        <button class="waves-effect indigo btn" type="submit">Отметить</button>
+                    </form>
+                </div>
+
+                <div class="col s1"></div>
+
                 <div class="col s1">
                     <div class="card-action">
                         <form data-th-action="@{/{id}/edit(id=${item.id})}" method="get">
