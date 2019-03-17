@@ -1,12 +1,12 @@
 package ru.technaxis.library.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.technaxis.library.dto.BookDto;
 import ru.technaxis.library.entity.BookEntity;
-import ru.technaxis.library.exception.LongDescriptionException;
-import ru.technaxis.library.exception.TitleIsNullException;
-import ru.technaxis.library.exception.BookNotFoundException;
+import ru.technaxis.library.exception.*;
 import ru.technaxis.library.repository.BookRepository;
 
 
@@ -15,6 +15,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BookService {
@@ -58,14 +59,58 @@ public class BookService {
         entity.setReadAlready(false);
 
         if (item.getTitle().length() == 0) {
-            throw new TitleIsNullException();
+            throw new InvalidLenghtException();
         }
 
         if (item.getDescription().length() >= 255) {
             throw new LongDescriptionException();
         }
 
+        repository.save(entity);
+    }
 
+    public BookEntity Empty() {
+        return new BookEntity();
+    }
+
+    public void add(BookDto item) {
+        BookEntity entity = new BookEntity();
+        entity.setTitle(item.getTitle());
+        entity.setDescription(item.getDescription());
+        entity.setAuthor(item.getAuthor());
+        entity.setIsbn(item.getIsbn());
+        entity.setPrintYear(item.getPrintYear());
+        entity.setReadAlready(item.isReadAlready());
+
+        if (item.getTitle().length() == 0) {
+            throw new InvalidLenghtException();
+        }
+
+        MultipartFile file = item.getFile();
+        if (!file.isEmpty() && file.getContentType() != null) {
+            String ext;
+            if (file.getContentType().equals(MediaType.IMAGE_PNG_VALUE)) {
+                ext = ".png";
+            } else if (file.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)) {
+                ext = ".jpg";
+            } else {
+                throw new UnsupportedFileContentTypeException();
+            }
+
+            String name = UUID.randomUUID().toString() + ext;
+
+            try {
+                file.transferTo(uploadPath.resolve(name));
+
+                if (entity.getPath() != null) {
+                    Files.deleteIfExists(uploadPath.resolve(entity.getPath()));
+                }
+            } catch (IOException e) {
+                throw new UploadFileException();
+            }
+
+            entity.setPath(name);
+        }
 
         repository.save(entity);
     }
