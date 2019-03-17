@@ -22,7 +22,7 @@ public class LibraryApplication {
                         "Чак Паланик",
                         "978-5-17-016682-4",
                         1996,
-                        false,
+                        true,
                         "FightClub.jpg"),
                 new BookEntity(
                         2,
@@ -32,7 +32,17 @@ public class LibraryApplication {
                         "978-5-699-30534-6",
                         1951,
                         true,
-                        "TheCatcherInTheRye.jpg")));
+                        "TheCatcherInTheRye.jpg"),
+                new BookEntity(
+                        3,
+                        "'Чапаев и Пустота'",
+                        "Действие книги происходит в 1919 году в дивизии Чапаева, в которой главный герой, поэт-декадент Петр Пустота, служит комиссаром, а также в наши дни, а также, как и всегда у Пелевина, в виртуальном пространстве",
+                        "Виктор Пелевин",
+                        "5-9560-0083-Х",
+                        2003,
+                        false,
+                        "Chapaev.jpg")
+                ));
     }
 
 }
