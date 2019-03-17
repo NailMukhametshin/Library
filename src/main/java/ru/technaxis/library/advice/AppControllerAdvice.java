@@ -29,10 +29,10 @@ public class AppControllerAdvice {
         return "error";
     }
 
-    @ExceptionHandler(TitleIsNullException.class)
-    public String handleTitleIsNull(
+    @ExceptionHandler(InvalidLenghtException.class)
+    public String handleInvalidLenght(
             Model model) {
-        model.addAttribute("message", "Пустое поле 'Имя документа'");
+        model.addAttribute("message", "Пустое поле 'Название книги'");
         return "error";
     }
 

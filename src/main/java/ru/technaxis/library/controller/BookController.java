@@ -21,6 +21,21 @@ public class BookController {
         return "all";
     }
 
+    @GetMapping("/{id}/add")
+    public String add(@PathVariable int id, Model model) {
+        model.addAttribute("item", service.Empty());
+        return "add";
+    }
+
+    @PostMapping("/{id}/add")
+    public String add(
+            @PathVariable int id,
+            @ModelAttribute BookDto dto
+    ) {
+        service.add(dto);
+
+        return "redirect:/";
+    }
 
     @GetMapping("/{id}")
     public String getById(@PathVariable int id, Model model) {
@@ -52,7 +67,7 @@ public class BookController {
     ) {
         service.save(dto);
 
-        return "redirect:/";
+        return "redirect:/{id}";
     }
 
     @GetMapping("/{id}/remove")

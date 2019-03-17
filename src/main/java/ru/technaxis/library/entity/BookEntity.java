@@ -3,6 +3,7 @@ package ru.technaxis.library.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,8 +30,8 @@ public class BookEntity {
     private String isbn;
     @Column(nullable = false)
     private int printYear;
-    @Column(nullable = false)
-    private boolean readAlready = false;
+    @ColumnDefault("false")
+    private boolean readAlready;
     private String path;
 
 }

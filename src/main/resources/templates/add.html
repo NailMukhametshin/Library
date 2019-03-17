@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head data-th-replace="fragments/layout :: headFragment(title='Редактирование')"></head>
+<head data-th-replace="fragments/layout :: headFragment(title='Новая книга')"></head>
 
 <body>
 <div class="container">
@@ -8,8 +8,8 @@
         <div class="col s12">
 
             <h3>Заполните данные</h3>
+            <form data-th-action="@{/{id}/add(id=${item.id})}" method="post" enctype="multipart/form-data">
 
-            <form data-th-action="@{/{id}/edit(id=${item.id})}" method="post" enctype="multipart/form-data">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">mode_edit</i>
                     <input id="title" name="title" placeholder="Введите название книги"
@@ -26,6 +26,13 @@
 
                 <div class="input-field col s12">
                     <i class="material-icons prefix">mode_edit</i>
+                    <input id="author" name="author" placeholder="Напишите автора"
+                           data-th-value="${item.author}">
+                    <label class="active" for="author">Краткое содержание</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mode_edit</i>
                     <input id="isbn" name="isbn" placeholder="Введите ISBN"
                            data-th-value="${item.isbn}">
                     <label class="active" for="isbn">ISBN</label>
@@ -38,10 +45,22 @@
                     <label class="active" for="printYear">Год издания</label>
                 </div>
 
-                <button class="waves-effect indigo btn" type="submit"><i class="material-icons right">cloud</i>Сохранить
+                <div class="row">
+                    <div class="file-field">
+                        <div class="waves-effect indigo btn">
+                            <span>Файл</span>
+                            <input input name="file" type="file">
+                        </div>
+                    </div>
+                </div>
+
+                <p data-th-if="${item.id != 0}">
+                    <img data-th-src="@{/media/{path}(path=${item.path})}">
+                </p>
+
+                <button class="waves-effect indigo btn" type="submit" ><i class="material-icons right">cloud</i>Добавить
                 </button>
             </form>
-
         </div>
     </div>
 </div>
