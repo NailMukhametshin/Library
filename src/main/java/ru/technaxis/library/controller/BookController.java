@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.technaxis.library.dto.BookDto;
-import ru.technaxis.library.service.BookService;
+import ru.technaxis.library.service.BookServiceImpl;
 
 @Controller
 @RequestMapping("/")
 public class BookController {
-    private final BookService service;
+    private final BookServiceImpl service;
 
-    public BookController(BookService service) {
+    public BookController(BookServiceImpl service) {
         this.service = service;
     }
 
