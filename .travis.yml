@@ -11,6 +11,9 @@ deploy:
   api_key: $HEROKU_KEY
   app: library-postgre
 
+services:
+    - postgresql
+
 notifications:
   email:
     recipients:
