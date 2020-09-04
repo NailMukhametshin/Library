@@ -5,20 +5,17 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col s10 section">
-            <div class="right-align">
-                <img data-th-src="@{/media/error.jpg}">
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s12">
+        <div class="col s9">
             <h3>Упс!</h3>
             <h4 data-th-if="${message}">
                 [[${message}]]
             </h4>
             <a data-th-href="@{/}" class="waves-effect indigo btn">На главную</a>
+        </div>
+        <div class="col s3 section">
+            <div class="right-align">
+                <img data-th-src="@{/media/error.jpg}">
+            </div>
         </div>
     </div>
 </div>

@@ -27,12 +27,25 @@
 
             <div class="row">
                 <div class="col s1">
-                <form data-th-action="@{/0/add}">
-                    <button class="indigo btn pulse" type="submit">Добавить</button>
-                </form>
+                    <form data-th-action="@{/0/add}">
+                        <button class="indigo btn pulse" type="submit">Добавить</button>
+                    </form>
                 </div>
             </div>
         </div>
+
+        <ul class="pagination">
+            <li class="disabled"><i class="material-icons">chevron_left</i></li>
+            <li data-th-each="page : ${pageList}">
+                <a data-th-href="@{/(page=${page},size=${pageSize})}"
+                   data-th-if="${page} == ${currentPageNumber}"><i class="tiny material-icons">location_on</i>
+                </a>
+                <a data-th-href="@{/(page=${page},size=${pageSize})}"
+                   data-th-if="${page} != ${currentPageNumber}"><span data-th-text="${page}"></span></a>
+            </li>
+            <li class="disabled"><i class="material-icons">chevron_right</i></li>
+        </ul>
+
     </div>
 </div>
 

@@ -15,9 +15,12 @@ public class BookController {
         this.service = service;
     }
 
-    @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("items", service.getAll());
+    @GetMapping()
+    public String getAll(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        model.addAttribute("items", service.getAll(page, size));
+        model.addAttribute("pageList", service.paginationPageList(size));
+        model.addAttribute("currentPageNumber", page);
+        model.addAttribute("pageSize", size);
         return "all";
     }
 
@@ -33,14 +36,12 @@ public class BookController {
             @ModelAttribute BookDto dto
     ) {
         service.add(dto);
-
         return "redirect:/";
     }
 
     @GetMapping("/{id}")
     public String getById(@PathVariable int id, Model model) {
         model.addAttribute("item", service.getById(id));
-
         return "view";
     }
 
@@ -50,7 +51,6 @@ public class BookController {
             @ModelAttribute BookDto dto
     ) {
         service.checkReadAlready(dto);
-
         return "redirect:/{id}";
     }
 
@@ -66,7 +66,6 @@ public class BookController {
             @ModelAttribute BookDto dto
     ) {
         service.save(dto);
-
         return "redirect:/{id}";
     }
 

@@ -6,7 +6,10 @@ import ru.technaxis.library.entity.BookEntity;
 import java.util.List;
 
 public interface BookService {
-    List<BookEntity> getAll();
+
+    List<BookEntity> getAll(int page, int size);
+
+    List<Integer> paginationPageList(int size);
 
     BookEntity getById(int id);
 

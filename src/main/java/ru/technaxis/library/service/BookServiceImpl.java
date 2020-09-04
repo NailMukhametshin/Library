@@ -1,6 +1,8 @@
 package ru.technaxis.library.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,11 +11,11 @@ import ru.technaxis.library.entity.BookEntity;
 import ru.technaxis.library.exception.*;
 import ru.technaxis.library.repository.BookRepository;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,8 +38,25 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> getAll() {
-        return repository.findAll();
+    public List<BookEntity> getAll(int page, int size) {
+        Page<BookEntity> all = repository.findAll(PageRequest.of(page - 1, size));
+        return all.getContent();
+    }
+
+    @Override
+    public List<Integer> paginationPageList(int size) {
+        ArrayList<Integer> integers = new ArrayList<>();
+        int booksQuantity = repository.findAll().size();
+        int pageQuantity;
+        if (booksQuantity % size != 0){
+            pageQuantity = booksQuantity / size + 1;
+        }else{
+            pageQuantity = booksQuantity / size;
+        }
+        for (int i = 1; i <= pageQuantity; i++) {
+            integers.add(i);
+        }
+        return integers;
     }
 
     @Override
