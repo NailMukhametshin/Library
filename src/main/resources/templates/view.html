@@ -16,7 +16,7 @@
                     <h5>ISBN: </h5> <span class="card-title" data-th-text="${item.isbn}"></span>
                     <h5>Год издания: </h5> <span class="card-title" data-th-text="${item.printYear}"></span>
                     <h5>Статус: </h5> <span class="card-title" data-th-text="${item.readAlready} ? #{Книга прочитана} : #{Книга еще не прочитана}"></span>
-                    <img data-th-src="@{/src/main/resources/media/{path}(path=${item.path})}">
+                    <img data-th-src="@{/media/{path}(path=${item.path})}">
                 </div>
             </div>
 
